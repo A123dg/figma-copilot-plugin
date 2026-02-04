@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "figma": {
+      "command": "node",
+      "args": ["dist/server.js"],
+      "cwd": "c:\\Users\\HP\\Desktop\\figma\\figma-copilot-plugin\\mcp-server"
+    }
+  }
+}

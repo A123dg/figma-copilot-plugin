@@ -1,0 +1,8 @@
+{
+  "figma": {
+    "tools": [
+      "figma-mcp-relay/figma_scan_document",
+      "figma-mcp-relay/figma_generate_screens"
+    ]
+  }
+}

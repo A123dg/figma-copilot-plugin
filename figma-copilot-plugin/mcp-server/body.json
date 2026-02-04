@@ -1,0 +1,11 @@
+{
+  "nodeId": "27:71",
+  "updates": {
+    "characters": "G",
+    "fontName": { "family": "Inter", "style": "Bold" },
+    "fontSize": 20,
+    "fills": [
+      { "type": "SOLID", "color": { "r": 0.918, "g": 0.263, "b": 0.208 } }
+    ]
+  }
+}

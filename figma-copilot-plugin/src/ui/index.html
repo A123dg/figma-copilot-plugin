@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MCP Bridge</title>
+    <style>
+      body { font-family: Inter, system-ui, Arial; margin: 0; }
+      .wrap { padding: 12px; }
+      .muted { color: #666; font-size: 12px; }
+      .status { font-size: 12px; margin-top: 6px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div><b>MCP Bridge</b></div>
+      <div id="status" class="status">Connecting...</div>
+      <div class="muted" style="margin-top:10px">
+        Keep this window open. Copilot calls MCP tools → server → this plugin.
+      </div>
+    </div>
+
+    <script>
+      const RELAY_URL = 'ws://127.0.0.1:8765';
+      const el = document.getElementById('status');
+
+      function setStatus(t) { el.textContent = t; }
+
+      let ws;
+      try {
+        ws = new WebSocket(RELAY_URL);
+
+        ws.onopen = () => setStatus('Connected → ' + RELAY_URL);
+        ws.onclose = () => setStatus('Disconnected');
+        ws.onerror = () => setStatus('Error (start relay server first)');
+
+        // relay -> plugin main
+        ws.onmessage = (event) => {
+          try {
+            const msg = JSON.parse(event.data);
+            parent.postMessage({ pluginMessage: { type: 'MCP_REQUEST', ...msg } }, '*');
+          } catch {}
+        };
+
+        // plugin main -> relay
+        window.onmessage = (event) => {
+          const m = event.data && event.data.pluginMessage;
+          if (m && m.type === 'MCP_RESPONSE') {
+            ws.send(JSON.stringify({ id: m.id, ok: m.ok, result: m.result, error: m.error }));
+          }
+        };
+      } catch (e) {
+        setStatus('Failed to init WebSocket');
+      }
+    </script>
+  </body>
+</html>
