@@ -16,7 +16,8 @@ npm run build
 cd mcp-server
 npm run build
 cd ..
-Cài đặt Figma Plugin
+  Trong mcp.json: sửa cwd đúng đường dẫn VD:       "cwd": "c:\\Users\\User\\Desktop\\figma\\figma-copilot-plugin\\mcp-server"
+  Cài đặt Figma Plugin
 Mở Figma Desktop App
 Vào menu Plugins → Development → Import plugin from manifest
 Chọn file manifest.json
